@@ -1,14 +1,9 @@
 var assert = require("assert");
+var redpen = require('./redpen');
 
-var calc = require("../src/calc.js");
-
-describe("calc", function() {
-	it("add", function() {
-		assert.equal(4, calc.add(1, 3));
-	    });
-
-	it("multiply", function() {
-		assert.equal(6, calc.multiply(2, 3));
+describe("validator", function() {
+	it("output", function() {
+		assert.equal(6, redpen.callRedPen("this is a long long long long long long long long long long long long long sentence."));
 	    });
     });
 

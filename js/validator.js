@@ -1,7 +1,7 @@
 function validateSentence(sentence) {
     var content = sentence.getContent().split(" ");
     for(var i = 0; i<content.length;i++){
-        if(content[i].length >= 10){
+        if(content[i].length >= 1){
             addError("word [" + content[i] +"] is too long. length: " + content[i].length, sentence);
         }
     }
