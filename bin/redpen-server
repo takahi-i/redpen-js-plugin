@@ -33,7 +33,7 @@ export REDPEN_HOME=`cd "$REDPEN_HOME"; pwd`
 STOP_KEY=redpen.stop
 
 # Port number for RedPen server
-REDPEN_PORT=8080
+REDPEN_PORT=9090
 
 # RedPen log file
 REDPEN_LOG_DIR=$REDPEN_HOME/logs
