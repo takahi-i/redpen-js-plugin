@@ -17,7 +17,7 @@ exports.stopRedPenServer = function () {
 
 exports.callRedPenServer = function (request, assertion) {
     var options = {
-        hostname: '0.0.0.0', port: 8080,
+        hostname: '0.0.0.0', port: 9090,
         path: '/rest/document/validate/json',
         method: 'POST',
         headers: {'Content-Type': 'application/json'}
