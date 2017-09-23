@@ -30,7 +30,7 @@ export REDPEN_HOME=`cd "$REDPEN_HOME"; pwd`
 
 # When this key is registered RedPen server is able to by http access.
 # If you do not want such behavior, please comment out STOP_KEY.
-STOP_KEY=redpen.stop
+STOP_KEY="redpen.stop"
 
 # Port number for RedPen server
 REDPEN_PORT=9090
@@ -86,7 +86,7 @@ REDPEN_LOG_FILE="$REDPEN_LOG_DIR/$REDPEN_LOG_FILENAME"
 if [ $COMMAND = "start" ]; then
     if [ -n "$STOP_KEY" ]; then
         echo "starting RedPen server with stop key..." 1>&2
-        exec "$JAVA_CMD" -jar $JAVA_OPTS $REDPEN_WAR_FILE -p $REDPEN_PORT -STOP_KEY $STOP_KEY >> $REDPEN_LOG_FILE 2>&1 &
+        exec "$JAVA_CMD" -jar $JAVA_OPTS $REDPEN_WAR_FILE -p $REDPEN_PORT -k $STOP_KEY >> $REDPEN_LOG_FILE 2>&1 &
         exit 0
     fi
     echo "starting RedPen server without stop key..." 1>&2
