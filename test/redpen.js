@@ -13,11 +13,6 @@ var defulat_options = {
   }
 }
 
-exports.callRedPen = function (input) {
-  const result = sync('redpen -c ./redpen-conf.xml -r json2 -s ' + input + " 2> /dev/null");
-  return JSON.parse(result.toString());
-};
-
 exports.startRedPenServer = function () {
   if (process.env.TEST_MODE && process.env.TEST_MODE == "server") {
     sync('bin/redpen-server start');
@@ -30,34 +25,27 @@ exports.stopRedPenServer = function () {
     sync('bin/redpen-server stop');
   }
 }
+exports.callRedPenCLI = function (options) {
+  let fullOptions = Object.assign(defulat_options, options);
+  const input = fullOptions.document;
+  const lang  = fullOptions.config.lang;
+  const result = sync("redpen -c ./redpen-conf.xml -r json2 -L " + lang + " -s " + "\"" + input + "\"" + " 2> /dev/null");
+  return JSON.parse(result.toString())[0].errors;
+};
 
-exports.callRedPenServer = function (request, assertion) {
-  var options = {
-    hostname: '0.0.0.0', port: 9090,
-    path: '/rest/document/validate/json',
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'}
-  };
-
-  var req = http.request(options, function (res) {
-    var data = '';
-    res.on('data', function (chunk) {
-      data += chunk;
-    });
-    res.on('end', function () {
-      errorSentences = JSON.parse(data).errors;
-      assertion(errorSentences);
-    });
-  });
-  req.write(JSON.stringify(request));
-  req.end();
-}
-
-exports.callRedPenServerMod = function (options) {
+exports.callRedPenServer = function (options) {
   let fullOptions = Object.assign(defulat_options, options);
   let result = request("POST","http://localhost:9090/rest/document/validate/json", {
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(fullOptions)
   });
   return JSON.parse(result.getBody('utf8')).errors;
+}
+
+exports.callRedPen = function(options){
+  if (process.env.TEST_MODE && process.env.TEST_MODE == "server") {
+    return this.callRedPenserver(options);
+  } else {
+    return this.callRedPenCLI(options);
+  }
 }

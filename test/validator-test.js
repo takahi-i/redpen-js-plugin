@@ -7,7 +7,7 @@ before(function() {
 
 describe("validator", function() {
 	it('test validator.js mod', function () {
-		let errorSentences = redpen.callRedPenServerMod({"document" : "This sentence contains toolongword. This sentence doesn't contain too long word."});
+		let errorSentences = redpen.callRedPen({"document" : "This sentence contains toolongword. This sentence do not contain too long word."});
     assert.equal(errorSentences.length, 1);
     firstErrorSentence = errorSentences[0];
 	  assert.equal(firstErrorSentence.sentence, 'This sentence contains toolongword.');
@@ -15,14 +15,6 @@ describe("validator", function() {
 	  assert.equal(1, firstErrorSentence.errors.length);
 	  assert.equal('word [toolongword.] is too long. length: 12', firstErrorSentence.errors[0].message);
 	});
-
-	it("size", function() {
-		assert.equal(1, redpen.callRedPen("this is a long long long long long long long long long long long long long sentence.").length);
-  });
-
-	it("output", function() {
-		assert.equal(1, redpen.callRedPen("this is a long long long long long long long long long long long long long sentence.").length);
-  });
 });
 
 after(function() {

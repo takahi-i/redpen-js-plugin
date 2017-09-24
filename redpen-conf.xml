@@ -1,4 +1,4 @@
-<redpen-conf lang="ja">
+<redpen-conf lang="en">
     <validators>
         <!--Load JavaScript validators-->
         <validator name="JavaScript">
