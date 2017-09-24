@@ -2,6 +2,17 @@ var http = require('http');
 var request = require('sync-request');
 var sync = require('child_process').execSync;
 
+var defulat_options = {
+  "format": "json2",
+  "documentParser": "PLAIN",
+  "config": {
+    "lang": "en",
+    "validators": {
+      "JavaScript": {}
+    }
+  }
+}
+
 exports.callRedPen = function (input) {
   const result = sync('redpen -c ./redpen-conf.xml -r json2 -s ' + input + " 2> /dev/null");
   return JSON.parse(result.toString());
@@ -38,22 +49,11 @@ exports.callRedPenServer = function (request, assertion) {
   req.end();
 }
 
-exports.callRedPenServerMod = function () {
-  var options = {
-    "document": "This sentence contains toolongword. This sentence doesn't contain too long word.",
-    "format": "json2",
-    "documentParser": "PLAIN",
-    "config": {
-      "lang": "en",
-      "validators": {
-        "JavaScript": {}
-      }
-    }
-  }
-
+exports.callRedPenServerMod = function (options) {
+  let fullOptions = Object.assign(defulat_options, options);
   let result = request("POST","http://localhost:9090/rest/document/validate/json", {
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(options)
+    body: JSON.stringify(fullOptions)
   });
-  console.error(result.getBody('utf8'));
+  return JSON.parse(result.getBody('utf8')).errors;
 }
