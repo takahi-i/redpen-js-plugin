@@ -19,12 +19,16 @@ exports.callRedPen = function (input) {
 };
 
 exports.startRedPenServer = function () {
-  sync('bin/redpen-server start');
-  sync('sleep 10');
+  if (process.env.TEST_MODE && process.env.TEST_MODE == "server") {
+    sync('bin/redpen-server start');
+    sync('sleep 10');
+  }
 }
 
 exports.stopRedPenServer = function () {
-  sync('bin/redpen-server stop');
+  if (process.env.TEST_MODE && process.env.TEST_MODE == "server") {
+    sync('bin/redpen-server stop');
+  }
 }
 
 exports.callRedPenServer = function (request, assertion) {

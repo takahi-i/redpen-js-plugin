@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "RedPen JS plugin sample",
   "scripts": {
-    "test": "mocha test/**/*-test.js --timeout 15000 --reporter spec"
+    "test": "TEST_MODE=server mocha test/**/*-test.js --timeout 15000 --reporter spec",
+    "test-with-cli": "TEST_MODE=cli  mocha test/**/*-test.js --timeout 15000 --reporter spec"
   },
   "repository": {
     "type": "git",
