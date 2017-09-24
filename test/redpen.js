@@ -11,20 +11,21 @@ var defulat_options = {
       "JavaScript": {}
     }
   }
-}
+};
 
-exports.startRedPenServer = function () {
+exports.initialize = function () {
   if (process.env.TEST_MODE && process.env.TEST_MODE == "server") {
     sync('bin/redpen-server start');
     sync('sleep 10');
   }
-}
+};
 
-exports.stopRedPenServer = function () {
+exports.cleanup = function () {
   if (process.env.TEST_MODE && process.env.TEST_MODE == "server") {
     sync('bin/redpen-server stop');
   }
-}
+};
+
 exports.callRedPenCLI = function (options) {
   let fullOptions = Object.assign(defulat_options, options);
   const input = fullOptions.document;
@@ -40,11 +41,11 @@ exports.callRedPenServer = function (options) {
     body: JSON.stringify(fullOptions)
   });
   return JSON.parse(result.getBody('utf8')).errors;
-}
+};
 
-exports.callRedPen = function(options){
+exports.callRedPen = function (options) {
   if (process.env.TEST_MODE && process.env.TEST_MODE == "server") {
-    return this.callRedPenserver(options);
+    return this.callRedPenServer(options);
   } else {
     return this.callRedPenCLI(options);
   }

@@ -2,7 +2,7 @@ var assert = require("assert");
 var redpen = require('./redpen');
 
 before(function() {
-	redpen.startRedPenServer();
+	redpen.initialize();
 });
 
 describe("validator", function() {
@@ -18,5 +18,5 @@ describe("validator", function() {
 });
 
 after(function() {
-	redpen.stopRedPenServer();
+	redpen.cleanup();
 });
